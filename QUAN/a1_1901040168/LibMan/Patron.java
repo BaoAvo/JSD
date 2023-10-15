@@ -5,7 +5,7 @@ import common.PatronType;
 import java.util.Date;
 import java.util.Objects;
 
-public class Patrons {
+public class Patron {
     private String patronId;
     private String name;
     private Date dob;
@@ -13,7 +13,7 @@ public class Patrons {
     private String phoneNumber;
     private PatronType patronType;
 
-    public Patrons(String patronId, String name, Date dob, String email, String phoneNumber, PatronType patronType) {
+    public Patron(String patronId, String name, Date dob, String email, String phoneNumber, PatronType patronType) {
         this.patronId = patronId;
         this.name = name;
         this.dob = dob;
@@ -74,7 +74,7 @@ public class Patrons {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Patrons patrons = (Patrons) o;
+        Patron patrons = (Patron) o;
         return Objects.equals(patronId, patrons.patronId) && Objects.equals(name, patrons.name) && Objects.equals(dob, patrons.dob) && Objects.equals(email, patrons.email) && Objects.equals(phoneNumber, patrons.phoneNumber) && patronType == patrons.patronType;
     }
 
@@ -93,5 +93,15 @@ public class Patrons {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", patronType=" + patronType +
                 '}';
+    }
+
+    //    Generate a unique ID for each Patron (e.g. P001, P002…)
+    //    The Patron ID is generated automatically by the system using the formula: the letter P
+    //    followed by a unique number, auto-incremented from 1. The number should be padded with
+    //    zeros so that it contains at least 3 digits. For instance, the first patron will have the Patron ID
+    //    of P001, the second patron will have P002, and so on. The 100th patron will have the ID of
+    //    P100, zero padding is no longer required because the number already has 3 digits
+    public void generatePatronID(){
+
     }
 }
