@@ -21,5 +21,20 @@ public class LibraryManProg {
         Duration diff = Duration.between(d1.atStartOfDay(), d2.atStartOfDay());
         long diffDays = diff.toDays();
         System.out.println(diffDays);
+
+        
+        LocalDate dueDate = LocalDate.of(2022, 1, 1);  
+          
+        LocalDate returnDate1 = LocalDate.of(2022, 1, 5);  
+        System.out.println(FineCalculator.calculateFine(returnDate1, dueDate));  // Outputs: 4.0  
+  
+        LocalDate returnDate2 = LocalDate.of(2022, 1, 12);  
+        System.out.println(FineCalculator.calculateFine(returnDate2, dueDate));  // Outputs: 15.0  
+  
+        LocalDate returnDate3 = LocalDate.of(2022, 1, 22);  
+        System.out.println(FineCalculator.calculateFine(returnDate3, dueDate));  // Outputs: 57.0 
+
+        Transaction transaction = new Transaction("P001", "JD-4-2023", LocalDate.of(2023, 5, 8), LocalDate.of(2023, 5, 10), LocalDate.of(2023, 5, 27), 2081933.00);  
+        System.out.println(transaction.getTransactionDetails()); 
     }
 }
