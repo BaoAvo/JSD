@@ -20,7 +20,7 @@ public class LibraryTransaction {
         this.checkoutDate = checkoutDate;
         this.dueDate = dueDate;
         this.returnDate = returnDate;
-        this.fineAmount = fineAmount;
+        this.fineAmount = calculateFine(returnDate,returnDate);
     }
 
     //  method calculates the fine amount based on the difference
@@ -31,7 +31,17 @@ public class LibraryTransaction {
     //   $2.00 per day for books overdue by 8 to 14 days
     //   $3.00 per day for books overdue by more than 14 days
     public double calculateFine(Date returnDate, Date dueDate){
-        return 0;
+        long daysOverdue = ChronoUnit.DAYS.between(dueDate, returnDate);  
+      
+        if (daysOverdue <= 0) {  
+            return 0.0;  
+        } else if (daysOverdue <= 7) {  
+            return daysOverdue * 1.0;  
+        } else if (daysOverdue <= 14) {  
+            return daysOverdue * 2.0;  
+        } else {  
+            return daysOverdue * 3.0;  
+        }
     }
 
     //    method generates a detailed description of the
@@ -46,7 +56,18 @@ public class LibraryTransaction {
     //    Return Date: Sun, May 27 3923
     //    Fine Amount: $2081933.00
     public void getDescription(){
-
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");  
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);  
+  
+        String returnDateString = (this.getReturnDate() != null) ? this.getReturnDate().format(dateFormatter) : "N/A";  
+        String fineAmountString = (this.getFineAmount() != null && this.getFineAmount() > 0) ? currencyFormatter.format(this.getFineAmount()) : "No Fine";  
+        System.out.println("Transaction Details:\n"  
+                        + "Patron ID: " + this.getParonLib().getPatronId() + "\n"  
+                        + "Book ISBN: " + this.getBookLib().getIsbn() + "\n"  
+                        + "Checkout Date: " + this.getCheckoutDate().format(dateFormatter) + "\n"  
+                        + "Due Date: " + this.getDueDate().format(dateFormatter) + "\n"  
+                        + "Return Date: " + returnDateString + "\n"  
+                        + "Fine Amount: " + fineAmountString);
     }
     public void tesst(){
         Date date = new Date();
