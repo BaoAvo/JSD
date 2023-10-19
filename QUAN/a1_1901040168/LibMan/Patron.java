@@ -6,15 +6,15 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Patron {
-    private String patronId;
+    private String patronId = 1;
     private String name;
     private Date dob;
     private String email;
     private String phoneNumber;
     private PatronType patronType;
 
-    public Patron(String patronId, String name, Date dob, String email, String phoneNumber, PatronType patronType) {
-        this.patronId = patronId;
+    public Patron(String name, Date dob, String email, String phoneNumber, PatronType patronType) {
+        this.patronId = generatePatronID();
         this.name = name;
         this.dob = dob;
         this.email = email;
@@ -24,10 +24,6 @@ public class Patron {
 
     public String getPatronId() {
         return patronId;
-    }
-
-    public void setPatronId(String patronId) {
-        this.patronId = patronId;
     }
 
     public String getName() {
@@ -102,6 +98,7 @@ public class Patron {
     //    of P001, the second patron will have P002, and so on. The 100th patron will have the ID of
     //    P100, zero padding is no longer required because the number already has 3 digits
     public void generatePatronID(){
-
+        this.getPatronId++;
+        return String.format("P%03d", this.getPatronId); 
     }
 }
