@@ -22,8 +22,8 @@ public class Book {
     private int publicationYear;
     private int numberOfCopiesAvailable;
 
-    public Book(String isbn, String title, String author, Genre genre, int publicationYear, int numberOfCopiesAvailable) {
-        this.isbn = isbn;
+    public Book(String title, String author, Genre genre, int publicationYear, int numberOfCopiesAvailable) {
+        this.isbn = generateISBN();
         this.title = title;
         this.author = author;
         this.genre = genre;
@@ -34,11 +34,7 @@ public class Book {
     public String getIsbn() {
         return isbn;
     }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
+    
     public String getTitle() {
         return title;
     }
@@ -97,7 +93,26 @@ public class Book {
     //    example, a book by John Doe in the year 2023 with the genre code for programming (e.g., 02)
     //    would have an ISBN like JD-02-2023.
     public void generateISBN(){
+        String genreCode = ""; 
+        String genreIndex = this.getGenre.ordinal() + 1;
+        if(genreIndex < 10){
+            genreCode = '0' + String.valueOf(genreIndex);
+        }else{
+            genreCode = String.valueOf(genreIndex);
+        }
+        String initials = getInitials(this.getAuthor); 
+        this.getIsbn = initials + "-" + genreCode + "-" + this.get
+    }
 
+    private String getInitials(String name) {  
+        String[] words = name.split(" ");  
+        String initials = "";  
+        for (String word : words) {  
+            if (!word.isEmpty()) {  
+                initials += word.charAt(0);  
+            }  
+        }  
+        return initials.toUpperCase(); 
     }
 
     //  Keep track of the number of copies available
