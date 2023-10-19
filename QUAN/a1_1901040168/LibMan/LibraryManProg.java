@@ -1,10 +1,27 @@
 package LibMan;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import common.Genre;
+import common.PatronType;
+
+import java.util.*;
 
 public class LibraryManProg {
+    private static Date[] checkoutDate = new Date[]{
+            new Date(2023 - 1900, Calendar.MARCH, 25),
+            new Date(2023 - 1900, Calendar.MAY, 8),
+            new Date(2023 - 1900, Calendar.JUNE, 1),
+            new Date(2023 - 1900, Calendar.JUNE, 25),
+            new Date(2023 - 1900, Calendar.AUGUST, 10)
+    };
+
+    private static Date[] dueDate = new Date[]{
+            new Date(2023 - 1900, Calendar.APRIL, 25),
+            new Date(2023 - 1900, Calendar.MAY, 10),
+            new Date(2023 - 1900, Calendar.JUNE, 25),
+            new Date(2023 - 1900, Calendar.JULY, 25),
+            new Date(2023 - 1900, Calendar.SEPTEMBER, 20)
+    };
+
     //    Specify and implement the LibraryManProgclass, which is the main program class.
     //    This class has a main method that performs the following tasks:
     //    (a) Initialize at least 10 books in the library collection.
@@ -16,25 +33,56 @@ public class LibraryManProg {
     //    (g) Sort transactions by patron ID
     //    (h) End the program.
     public static void main(String[] args) {
-        LocalDate d1 = LocalDate.parse("2018-05-26", DateTimeFormatter.ISO_LOCAL_DATE);
-        LocalDate d2 = LocalDate.parse("2018-05-28", DateTimeFormatter.ISO_LOCAL_DATE);
-        Duration diff = Duration.between(d1.atStartOfDay(), d2.atStartOfDay());
-        long diffDays = diff.toDays();
-        System.out.println(diffDays);
+        final int year = 2023 - 2019;
+        LibraryManager libraryManager = new LibraryManager();
 
-        
-        LocalDate dueDate = LocalDate.of(2022, 1, 1);  
-          
-        LocalDate returnDate1 = LocalDate.of(2022, 1, 5);  
-        System.out.println(FineCalculator.calculateFine(returnDate1, dueDate));  // Outputs: 4.0  
-  
-        LocalDate returnDate2 = LocalDate.of(2022, 1, 12);  
-        System.out.println(FineCalculator.calculateFine(returnDate2, dueDate));  // Outputs: 15.0  
-  
-        LocalDate returnDate3 = LocalDate.of(2022, 1, 22);  
-        System.out.println(FineCalculator.calculateFine(returnDate3, dueDate));  // Outputs: 57.0 
+        //  (a) Initialize at least 10 books in the library collection.
+        Book book1 = new Book("To Kill a Mockingbird", "Harper Lee", Genre.FICTION, 2005, 3);
+        Book book2 = new Book("Pride and Prejudice", "Jane Austen", Genre.MYSTERY, 2010, 5);
+        Book book3 = new Book("The Great Gatsby", "Scott Fitzgerald", Genre.SCIENCE_FICTION, 2018, 2);
+        Book book4 = new Book("The Catcher in the Rye", "De Salinger", Genre.HISTORY, 1995, 7);
+        Book book5 = new Book("Moby-Dick", "Herman Melville", Genre.ROMANCE, 2015, 4);
+        Book book6 = new Book("War and Peace", "Leo Tolstoy", Genre.THRILLER, 2013, 6);
+        Book book7 = new Book("The Lord of the Rings", "Rich Tolkien", Genre.BIOGRAPHY, 2002, 1);
+        Book book8 = new Book("Harry Potter and the Sorcerer's Stone", "Kane Rowling", Genre.FANTASY, 2008, 8);
+        Book book9 = new Book("The Hunger Games", "Suzanne Collins", Genre.HORROR, 2017, 9);
+        Book book10 = new Book("The Alchemist", "Paulo Coelho", Genre.NON_FICTION, 2000, 10);
 
-        Transaction transaction = new Transaction("P001", "JD-4-2023", LocalDate.of(2023, 5, 8), LocalDate.of(2023, 5, 10), LocalDate.of(2023, 5, 27), 2081933.00);  
-        System.out.println(transaction.getTransactionDetails()); 
+        // Add Book to list
+        libraryManager.books.addAll(Arrays.asList(book1, book2, book3, book4, book5,book6,book7,book7,book9,book10));
+
+        for (Book book : libraryManager.books) {
+            System.out.println(book.toString());
+        }
+        System.out.println("---------------------------------");
+
+        // (b) Initialize at least 3 patrons involving both regular and premium patrons.
+        Patron patron1 = new Patron("John Doe", "1990-05-15", "john.doe@email.com", "123-456-7890", PatronType.REGULAR);
+        Patron patron2 = new Patron("Jane Smith", "1985-07-20", "jane.smith@email.com", "987-654-3210", PatronType.PREMIUM);
+        Patron patron3 = new Patron("Alice Johnson", "1998-03-10", "alice.johnson@email.com", "555-123-4567", PatronType.REGULAR);
+        List<Patron> patronList = new ArrayList<>();
+        patronList.add(patron1);
+        patronList.add(patron2);
+        patronList.add(patron3);
+        for (Patron i : patronList) {
+            System.out.println(i.toString());
+        }
+        System.out.println("---------------------------------");
+
+        LibraryTransaction transaction1 = new LibraryTransaction(patron1, book1, new Date(year, 0, 1), new Date(year, 1, 5), new Date(year, 1, 1));
+        LibraryTransaction transaction2 = new LibraryTransaction(patron2, book2, new Date(year, 1, 1), new Date(year, 1, 25), new Date(year, 2, 15));
+        LibraryTransaction transaction3 = new LibraryTransaction(patron3, book7, new Date(year, 2, 25), new Date(year, 3, 25), new Date(year, 4, 27));
+        LibraryTransaction transaction4 = new LibraryTransaction(patron2, book10, new Date(year, 5, 25), new Date(year, 6, 10), new Date(year, 8, 27));
+        LibraryTransaction transaction5 = new LibraryTransaction(patron2, book8, new Date(year, 5, 5), new Date(year, 6, 1), new Date(year, 6, 8));
+        libraryManager.transactions.addAll(Arrays.asList(transaction1, transaction2, transaction3, transaction4, transaction5));
+
+        // get check out books
+        List<LibraryTransaction> checkedOutBooks = libraryManager.getCheckedOutBooks(patron2);
+
+        System.out.println("Books checked out by patron2:");
+        for (LibraryTransaction transaction : checkedOutBooks) {
+            transaction.getDescription();
+            System.out.println("------------------------------------");
+        }
     }
 }

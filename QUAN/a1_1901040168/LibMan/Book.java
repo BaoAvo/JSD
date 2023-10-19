@@ -22,19 +22,23 @@ public class Book {
     private int publicationYear;
     private int numberOfCopiesAvailable;
 
+    public Book(){}
     public Book(String title, String author, Genre genre, int publicationYear, int numberOfCopiesAvailable) {
-        this.isbn = generateISBN();
         this.title = title;
         this.author = author;
         this.genre = genre;
         this.publicationYear = publicationYear;
         this.numberOfCopiesAvailable = numberOfCopiesAvailable;
+        this.setIsbn(this.generateISBN());
     }
 
     public String getIsbn() {
         return isbn;
     }
-    
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
     public String getTitle() {
         return title;
     }
@@ -92,16 +96,16 @@ public class Book {
     //    elements like the author's initials, a numerical code for the genre, and the publication year. For
     //    example, a book by John Doe in the year 2023 with the genre code for programming (e.g., 02)
     //    would have an ISBN like JD-02-2023.
-    public void generateISBN(){
+    public String generateISBN(){
         String genreCode = ""; 
-        String genreIndex = this.getGenre.ordinal() + 1;
+        int genreIndex = this.getGenre().ordinal() + 1;
         if(genreIndex < 10){
             genreCode = '0' + String.valueOf(genreIndex);
         }else{
             genreCode = String.valueOf(genreIndex);
         }
-        String initials = getInitials(this.getAuthor); 
-        this.getIsbn = initials + "-" + genreCode + "-" + this.get
+        String initials = getInitials(this.getAuthor());
+        return initials + "-" + genreCode + "-" + this.getPublicationYear();
     }
 
     private String getInitials(String name) {  
@@ -116,8 +120,8 @@ public class Book {
     }
 
     //  Keep track of the number of copies available
-    public void getNumCopiesAvailable(){
-
+    public int getNumCopiesAvailable(){
+        return this.getNumberOfCopiesAvailable();
     }
 
 }

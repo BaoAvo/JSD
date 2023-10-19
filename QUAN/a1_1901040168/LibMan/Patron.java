@@ -2,28 +2,33 @@ package LibMan;
 
 import common.PatronType;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class Patron {
-    private String patronId = 1;
+    private String patronId;
     private String name;
-    private Date dob;
+    private String dob;
     private String email;
     private String phoneNumber;
     private PatronType patronType;
 
-    public Patron(String name, Date dob, String email, String phoneNumber, PatronType patronType) {
-        this.patronId = generatePatronID();
+    private static int index = 0;
+
+    public Patron(String name, String dob, String email, String phoneNumber, PatronType patronType) {
         this.name = name;
         this.dob = dob;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.patronType = patronType;
+        this.setPatronId(generatePatronID());
     }
 
     public String getPatronId() {
         return patronId;
+    }
+
+    public void setPatronId(String patronId) {
+        this.patronId = patronId;
     }
 
     public String getName() {
@@ -34,11 +39,11 @@ public class Patron {
         this.name = name;
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 
@@ -97,8 +102,8 @@ public class Patron {
     //    zeros so that it contains at least 3 digits. For instance, the first patron will have the Patron ID
     //    of P001, the second patron will have P002, and so on. The 100th patron will have the ID of
     //    P100, zero padding is no longer required because the number already has 3 digits
-    public void generatePatronID(){
-        this.getPatronId++;
-        return String.format("P%03d", this.getPatronId); 
+    public String generatePatronID(){
+        this.index++;
+        return String.format("P%03d", this.index);
     }
 }
