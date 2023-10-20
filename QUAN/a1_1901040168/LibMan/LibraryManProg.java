@@ -66,7 +66,6 @@ public class LibraryManProg {
         for (Patron i : patronList) {
             System.out.println(i.toString());
         }
-        System.out.println("---------------------------------");
 
         //  Initialize and use to create 5 book transactions
         LibraryTransaction transaction1 = new LibraryTransaction(patron1, book1, checkoutDate[0], dueDate[2], currentDate);
@@ -76,31 +75,49 @@ public class LibraryManProg {
         LibraryTransaction transaction5 = new LibraryTransaction(patron2, book8, checkoutDate[2], dueDate[2], currentDate);
         libraryManager.transactions.addAll(Arrays.asList(transaction1, transaction2, transaction3, transaction4, transaction5));
 
-        // get check out books
-        List<LibraryTransaction> checkedOutBooks = libraryManager.getCheckedOutBooks(patron2);
-
-        System.out.println("Books checked out by patron2:");
-        for (LibraryTransaction transaction : checkedOutBooks) {
-            transaction.getDescription();
-            System.out.println("------------------------------------");
-        }
-        
         //  Print a list of currently checked-out books
+        System.out.println("---------------------------------");
         System.out.println("Checked-out Books: "); 
         List<LibraryTransaction> checkoutBooks = libraryManager.getCheckedOutBooks(patron2);
-        checkoutBooks.getDescription();
+        checkoutBooks.forEach(i -> {
+            i.getDescription();
+        });
 
         //  Print list of the overdue books that are not returned yet
+        System.out.println("---------------------------------");
         System.out.println("Overdue Books: ");  
         List<LibraryTransaction> overdueBooks = libraryManager.getOverdueBooks();
-        overdueBooks.getDescription(); 
+        overdueBooks.forEach(i -> {
+            i.getDescription();
+        });
         //  Patron returns the book
+        System.out.println("---------------------------------");
         System.out.println("Return Books: ");
         libraryManager.returnBook(transaction5,currentDate);
         //  Sort transactions by patron ID
+        System.out.println("---------------------------------");
         System.out.println("After sort: ");
-        libraryManager.transactions.sort();
-        libraryManager.transactions.getDescription();
+        libraryManager.sort();
+        libraryManager.transactions.forEach(i -> {
+            i.getDescription();
+        });
+
+        // Borrow book
+        System.out.println("---------------------------------");
+        System.out.println("Borrow book: ");
+        libraryManager.checkoutBook(patron2,book9,checkoutDate[3], dueDate[4]);
+        LibraryTransaction transaction7 = new LibraryTransaction(patron2,book7,checkoutDate[3], dueDate[4], null);
+        libraryManager.checkoutBook(patron2,book7,checkoutDate[3], dueDate[4]);
+        libraryManager.checkoutBook(patron3,book7,checkoutDate[3], dueDate[4]);
+//        libraryManager.checkoutBook(patron2,book1,checkoutDate[3], dueDate[4]);
+        libraryManager.transactions.forEach(i -> {
+            i.getDescription();
+        });
+        ;
+        System.out.println("---------------------------------");
+        System.out.println("Return Books: ");
+        libraryManager.returnBook(new LibraryTransaction(patron2,book7,checkoutDate[3], dueDate[4], null),currentDate);
+
         // End the program  
         System.exit(0); 
     }

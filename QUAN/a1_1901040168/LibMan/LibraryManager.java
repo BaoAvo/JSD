@@ -1,26 +1,27 @@
 package LibMan;
 
 import common.DateUtils;
+import common.PatronType;
 
 import java.util.*;
 
 public class LibraryManager {
     public List<Book> books; // This list holds all the books in the library
-    public List<LibraryTransaction> transactions ; // This list contains all the transactions that have occurred in the library.
+    public List<LibraryTransaction> transactions; // This list contains all the transactions that have occurred in the library.
 
-    public LibraryManager(){
+    public LibraryManager() {
         this.books = new ArrayList<>();
         this.transactions = new ArrayList<>();
     }
 
     //    This method adds a book to the library
-    public List<Book> addBook(Book book){
+    public List<Book> addBook(Book book) {
         this.books.add(book);
         return this.books;
     }
 
     //    This method retrieves a list of checked-out books for a specific patron
-    public List<LibraryTransaction> getCheckedOutBooks(Patron patron){
+    public List<LibraryTransaction> getCheckedOutBooks(Patron patron) {
         List<LibraryTransaction> checkedOutBooks = new ArrayList<>();
         for (LibraryTransaction transaction : transactions) {
             if (transaction.getPatronLib().getPatronId() == patron.getPatronId()) {
@@ -34,26 +35,28 @@ public class LibraryManager {
     //    if the patron has exceeded their checkout limit based on their patron type. If
     //    not, it creates a new LibraryTransaction, adds it to the list of transactions,
     //    and updates the number of available copies for the book.
-    public void checkoutBook(Patron patron, Book book, Date checkoutDate, Date dueDate){
-        int checkoutLimit = getCheckoutLimit(patron); // Assume you have a method to get the patron's checkout limit
+    public void checkoutBook(Patron patron, Book book, Date checkoutDate, Date dueDate) {
+        int checkoutLimit = 0; // Assume you have a method to get the patron's checkout limit
+        if (patron.getPatronType().equals(PatronType.REGULAR)) {
+            checkoutLimit = 3;
+        } else if (patron.getPatronType().equals(PatronType.PREMIUM)) {
+            checkoutLimit = 5;
+        } else {
+            checkoutLimit = 0;
+        }
         int booksCheckedOut = getCheckedOutBooks(patron).size(); // Assume you have a method to get patron's checked-out books
 
         if (booksCheckedOut < checkoutLimit) {
-            LibraryTransaction transaction = new LibraryTransaction(patron, book, checkoutDate, dueDate, null);
-            transactions.add(transaction);
-            book.setNumberOfCopiesAvailable(book.getNumberOfCopiesAvailable() - 1);
+            if (book.getNumCopiesAvailable() > 0) {
+                LibraryTransaction transaction = new LibraryTransaction(patron, book, checkoutDate, dueDate, null);
+                transactions.add(transaction);
+                book.setNumberOfCopiesAvailable(book.getNumberOfCopiesAvailable() - 1);
+                System.out.println(book.getNumberOfCopiesAvailable());
+            } else {
+                System.out.println(book.getTitle() + " in the library are out of stock");
+            }
         } else {
-            System.out.println("Patron has exceeded their checkout limit.");
-        }
-    }
-
-    public int getCheckoutLimit(Patron patron){
-        if(patron.getPatronType().equals("REGULAR")){
-            return 3;
-        }else if(patron.getPatronType().equals("PREMIUM")){
-            return 5;
-        }else{
-            return 0;
+            System.out.println("Hey " + patron.getName() + "! You has exceeded checkout limit.");
         }
     }
 
@@ -62,26 +65,25 @@ public class LibraryManager {
     //    transaction, calculates fines, updates the number of available copies for the
     //    book, and prints a success message
     public void returnBook(LibraryTransaction transaction, Date returnDate) {
-        transaction.setReturnDate(returnDate); // Set the return date in the transaction
-        transaction.getDescription();
+        LibraryTransaction libraryTransaction =  new LibraryTransaction(transaction.getPatronLib(),transaction.getBookLib(),transaction.getCheckoutDate(),transaction.getDueDate(),returnDate);
+        this.transactions.remove(transaction);
         transaction.getBookLib().setNumberOfCopiesAvailable(transaction.getBookLib().getNumberOfCopiesAvailable() + 1);
-        System.out.println("-----------------------------------------");
-        System.out.println(transaction.getBookLib().getNumberOfCopiesAvailable() + 1);
+        libraryTransaction.getDescription();
     }
 
     //    This method return a list of library transactions representing overdue books that are not returned yet.
     //    Note: To get the current date to use for calculating the number of overdue days,
     //    you need to use the getCurrentDate() method in the provided
     //    common.DateUtils class (you should not modify this class)
-    public List<LibraryTransaction> getOverdueBooks(){
+    public List<LibraryTransaction> getOverdueBooks() {
         List<LibraryTransaction> overdueBooks = new ArrayList<>();
         DateUtils dateUtils = new DateUtils();
-        Date currentDate = dateUtils.getCurrentDate();// Get the current date
+        Date returnDate = dateUtils.getCurrentDate();// Get the current date
 
         for (LibraryTransaction transaction : transactions) {
             Date dueDate = transaction.getDueDate();
 
-            if (dueDate != null && currentDate.after(dueDate) && transaction.getReturnDate() == null) {
+            if (dueDate != null && returnDate.after(dueDate) && transaction.getReturnDate() != null) {
                 // The book is overdue if the due date is in the past and it hasn't been returned yet
                 overdueBooks.add(transaction);
             }

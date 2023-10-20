@@ -83,6 +83,9 @@ public class LibraryTransaction {
     //   $2.00 per day for books overdue by 8 to 14 days
     //   $3.00 per day for books overdue by more than 14 days
     public double calculateFine(Date returnDate, Date dueDate){
+        if(returnDate == null){
+            return 0;
+        }
         LocalDate returnDateCast = returnDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
         LocalDate dueDateCast = dueDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
         long daysOverdue = ChronoUnit.DAYS.between(dueDateCast,returnDateCast);

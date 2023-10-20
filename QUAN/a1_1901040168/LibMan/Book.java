@@ -81,14 +81,14 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Books{" +
+        return "Books[" +
                 "isbn='" + isbn + '\'' +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", genre=" + genre +
                 ", publicationYear=" + publicationYear +
                 ", numberOfCopiesAvailable=" + numberOfCopiesAvailable +
-                '}';
+                ']';
     }
 
     //    Generate a unique ISBN for each book.

@@ -86,14 +86,14 @@ public class Patron {
 
     @Override
     public String toString() {
-        return "Patrons{" +
+        return "Patrons[" +
                 "patronId='" + patronId + '\'' +
                 ", name='" + name + '\'' +
                 ", dob=" + dob +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", patronType=" + patronType +
-                '}';
+                ']';
     }
 
     //    Generate a unique ID for each Patron (e.g. P001, P002…)
