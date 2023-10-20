@@ -1,7 +1,6 @@
 package LibMan;
 
-import common.Genre;
-import common.PatronType;
+import common.*;
 
 import java.util.*;
 
@@ -33,10 +32,11 @@ public class LibraryManProg {
     //    (g) Sort transactions by patron ID
     //    (h) End the program.
     public static void main(String[] args) {
-        final int year = 2023 - 2019;
+        DateUtils dateUtils = new DateUtils();
+        Date currentDate = dateUtils.getCurrentDate();
         LibraryManager libraryManager = new LibraryManager();
 
-        //  (a) Initialize at least 10 books in the library collection.
+        //  Initialize at least 10 books in the library collection.
         Book book1 = new Book("To Kill a Mockingbird", "Harper Lee", Genre.FICTION, 2005, 3);
         Book book2 = new Book("Pride and Prejudice", "Jane Austen", Genre.MYSTERY, 2010, 5);
         Book book3 = new Book("The Great Gatsby", "Scott Fitzgerald", Genre.SCIENCE_FICTION, 2018, 2);
@@ -50,13 +50,12 @@ public class LibraryManProg {
 
         // Add Book to list
         libraryManager.books.addAll(Arrays.asList(book1, book2, book3, book4, book5,book6,book7,book7,book9,book10));
-
         for (Book book : libraryManager.books) {
             System.out.println(book.toString());
         }
         System.out.println("---------------------------------");
 
-        // (b) Initialize at least 3 patrons involving both regular and premium patrons.
+        //  Initialize at least 3 patrons involving both regular and premium patrons.
         Patron patron1 = new Patron("John Doe", "1990-05-15", "john.doe@email.com", "123-456-7890", PatronType.REGULAR);
         Patron patron2 = new Patron("Jane Smith", "1985-07-20", "jane.smith@email.com", "987-654-3210", PatronType.PREMIUM);
         Patron patron3 = new Patron("Alice Johnson", "1998-03-10", "alice.johnson@email.com", "555-123-4567", PatronType.REGULAR);
@@ -69,11 +68,12 @@ public class LibraryManProg {
         }
         System.out.println("---------------------------------");
 
-        LibraryTransaction transaction1 = new LibraryTransaction(patron1, book1, new Date(year, 0, 1), new Date(year, 1, 5), new Date(year, 1, 1));
-        LibraryTransaction transaction2 = new LibraryTransaction(patron2, book2, new Date(year, 1, 1), new Date(year, 1, 25), new Date(year, 2, 15));
-        LibraryTransaction transaction3 = new LibraryTransaction(patron3, book7, new Date(year, 2, 25), new Date(year, 3, 25), new Date(year, 4, 27));
-        LibraryTransaction transaction4 = new LibraryTransaction(patron2, book10, new Date(year, 5, 25), new Date(year, 6, 10), new Date(year, 8, 27));
-        LibraryTransaction transaction5 = new LibraryTransaction(patron2, book8, new Date(year, 5, 5), new Date(year, 6, 1), new Date(year, 6, 8));
+        //  Initialize and use to create 5 book transactions
+        LibraryTransaction transaction1 = new LibraryTransaction(patron1, book1, checkoutDate[0], dueDate[2], currentDate);
+        LibraryTransaction transaction2 = new LibraryTransaction(patron2, book2, checkoutDate[0], dueDate[0], currentDate);
+        LibraryTransaction transaction3 = new LibraryTransaction(patron3, book7, checkoutDate[0], dueDate[0], currentDate);
+        LibraryTransaction transaction4 = new LibraryTransaction(patron2, book10, checkoutDate[2], dueDate[4], currentDate);
+        LibraryTransaction transaction5 = new LibraryTransaction(patron2, book8, checkoutDate[2], dueDate[2], currentDate);
         libraryManager.transactions.addAll(Arrays.asList(transaction1, transaction2, transaction3, transaction4, transaction5));
 
         // get check out books
@@ -84,5 +84,24 @@ public class LibraryManProg {
             transaction.getDescription();
             System.out.println("------------------------------------");
         }
+        
+        //  Print a list of currently checked-out books
+        System.out.println("Checked-out Books: "); 
+        List<LibraryTransaction> checkoutBooks = libraryManager.getCheckedOutBooks(patron2);
+        checkoutBooks.getDescription();
+
+        //  Print list of the overdue books that are not returned yet
+        System.out.println("Overdue Books: ");  
+        List<LibraryTransaction> overdueBooks = libraryManager.getOverdueBooks();
+        overdueBooks.getDescription(); 
+        //  Patron returns the book
+        System.out.println("Return Books: ");
+        libraryManager.returnBook(transaction5,currentDate);
+        //  Sort transactions by patron ID
+        System.out.println("After sort: ");
+        libraryManager.transactions.sort();
+        libraryManager.transactions.getDescription();
+        // End the program  
+        System.exit(0); 
     }
 }
