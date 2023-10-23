@@ -1,8 +1,6 @@
-package LibMan;
+package a1_1901040168;
 
 import common.PatronType;
-
-import java.util.Objects;
 
 public class Patron {
     private String patronId;
@@ -69,14 +67,6 @@ public class Patron {
 
     public void setPatronType(PatronType patronType) {
         this.patronType = patronType;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Patron patrons = (Patron) o;
-        return Objects.equals(patronId, patrons.patronId) && Objects.equals(name, patrons.name) && Objects.equals(dob, patrons.dob) && Objects.equals(email, patrons.email) && Objects.equals(phoneNumber, patrons.phoneNumber) && patronType == patrons.patronType;
     }
 
     @Override

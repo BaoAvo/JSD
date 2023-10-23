@@ -1,8 +1,12 @@
-package LibMan;
+package a1_190140180;
+import common.DateUtils;
+import common.Genre;
+import common.PatronType;
 
-import common.*;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class LibraryManProg {
     private static Date[] checkoutDate = new Date[]{
@@ -21,19 +25,34 @@ public class LibraryManProg {
             new Date(2023 - 1900, Calendar.SEPTEMBER, 20)
     };
 
-    //    Specify and implement the LibraryManProgclass, which is the main program class.
-    //    This class has a main method that performs the following tasks:
-    //    (a) Initialize at least 10 books in the library collection.
-    //    (b) Initialize at least 3 patrons involving both regular and premium patrons.
-    //    (c) Initialize and use to create 5 book transactions
-    //    (d) Print a list of currently checked-out books
-    //    (e) Print list of the overdue books that are not returned yet
-    //    (f) Patron returns the book
-    //    (g) Sort transactions by patron ID
-    //    (h) End the program.
     public static void main(String[] args) {
-        Date currentDate = new DateUtils().getCurrentDate();
         LibraryManager libraryManager = new LibraryManager();
+
+        // Initialize at least 10 books in the library collection.
+
+
+
+        // Initialize at least 3 patrons involving both regular and premium patrons.
+
+
+        // Initialize and use to create 5 book transactions
+
+
+        // Print currently checked-out books
+
+
+        // Patron returns the book
+
+
+        // Print list of the overdue books that are not returned yet
+
+
+        // Patron returns the book
+
+
+
+        // Sort transactions by patron ID
+        Date currentDate = new DateUtils().getCurrentDate();
 
         //  Initialize at least 10 books in the library collection.
         Book book1 = new Book("To Kill a Mockingbird", "Harper Lee", Genre.FICTION, 2005, 3);
@@ -98,7 +117,8 @@ public class LibraryManProg {
             i.getDescription();
         });
 
-        // End the program  
+        // End the program
         System.exit(0);
+
     }
 }

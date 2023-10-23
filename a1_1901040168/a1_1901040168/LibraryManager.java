@@ -1,9 +1,10 @@
-package LibMan;
+package a1_1901040168;
 
 import common.DateUtils;
 import common.PatronType;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class LibraryManager {
     public List<Book> books; // This list holds all the books in the library

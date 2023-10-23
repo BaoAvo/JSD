@@ -1,19 +1,7 @@
-package LibMan;
+package a1_1901040168;
 
 import common.Genre;
 
-/*
-    Books in the library can be classified into various genres, such as programming, fiction,
-    non-fiction, science fiction, etc. You’ll need to use the provided common.Genre enum class.
-    There are two types of patrons in the library system: regular patrons and premium patrons.
-    Regular patrons can check out a maximum of 3 books at a time, while premium patrons can
-    check out up to 5 books. Patrons are responsible for returning books on time to avoid fines.
-    You are provided with the common.PatronType enum class. You should not implement or
-    modify it.
-    Your program should allow patrons to check out and return books, librarians to add new
-    books to the collection, update book information, and calculate fines for overdue books based
-    on the defined criteria.
-*/
 public class Book {
     private String isbn;
     private String title;

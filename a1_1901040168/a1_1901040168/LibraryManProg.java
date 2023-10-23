@@ -1,8 +1,11 @@
-package LibMan;
+package a1_1901040168;
 
-import common.*;
-
-import java.util.*;
+import common.DateUtils;
+import common.Genre;
+import common.PatronType;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class LibraryManProg {
     private static Date[] checkoutDate = new Date[]{
@@ -21,16 +24,6 @@ public class LibraryManProg {
             new Date(2023 - 1900, Calendar.SEPTEMBER, 20)
     };
 
-    //    Specify and implement the LibraryManProgclass, which is the main program class.
-    //    This class has a main method that performs the following tasks:
-    //    (a) Initialize at least 10 books in the library collection.
-    //    (b) Initialize at least 3 patrons involving both regular and premium patrons.
-    //    (c) Initialize and use to create 5 book transactions
-    //    (d) Print a list of currently checked-out books
-    //    (e) Print list of the overdue books that are not returned yet
-    //    (f) Patron returns the book
-    //    (g) Sort transactions by patron ID
-    //    (h) End the program.
     public static void main(String[] args) {
         Date currentDate = new DateUtils().getCurrentDate();
         LibraryManager libraryManager = new LibraryManager();
@@ -57,10 +50,6 @@ public class LibraryManProg {
         Patron patron1 = new Patron("John Doe", "1990-05-15", "john.doe@email.com", "123-456-7890", PatronType.REGULAR);
         Patron patron2 = new Patron("Jane Smith", "1985-07-20", "jane.smith@email.com", "987-654-3210", PatronType.PREMIUM);
         Patron patron3 = new Patron("Alice Johnson", "1998-03-10", "alice.johnson@email.com", "555-123-4567", PatronType.REGULAR);
-        List<Patron> patronList = new ArrayList<>();
-        patronList.add(patron1);
-        patronList.add(patron2);
-        patronList.add(patron3);
 
         //  Initialize and use to create 5 book transactions
         libraryManager.checkoutBook(patron1, book1, checkoutDate[0], dueDate[2]);
@@ -77,11 +66,6 @@ public class LibraryManProg {
             i.getDescription();
         });
 
-        //  Patron returns the book
-        System.out.println("---------------------------------");
-        System.out.println("Return Books: ");
-        libraryManager.returnBook(checkoutBooks.get(0), currentDate);
-
         //  Print list of the overdue books that are not returned yet
         System.out.println("---------------------------------");
         System.out.println("Overdue Books: ");
@@ -89,6 +73,11 @@ public class LibraryManProg {
         overdueBooks.forEach(i -> {
             i.getDescription();
         });
+
+        //  Patron returns the book
+        System.out.println("---------------------------------");
+        System.out.println("Return Books: ");
+        libraryManager.returnBook(checkoutBooks.get(0), currentDate);
 
         //  Sort transactions by patron ID
         System.out.println("---------------------------------");
@@ -98,7 +87,8 @@ public class LibraryManProg {
             i.getDescription();
         });
 
-        // End the program  
+        // End the program
         System.exit(0);
+
     }
 }
