@@ -10,7 +10,7 @@ public class Patron {
     private String phoneNumber;
     private PatronType patronType;
 
-    private static int index = 0;
+    private static int patronIndex = 0;
 
     public Patron(String name, String dob, String email, String phoneNumber, PatronType patronType) {
         this.name = name;
@@ -77,8 +77,8 @@ public class Patron {
     }
 
     public String generatePatronID(){
-        this.index++;
-        String patronIdIncrease = String.format("P%03d", this.index);
+        this.patronIndex++;
+        String patronIdIncrease = String.format("P%03d", this.patronIndex);
         return patronIdIncrease;
     }
 }

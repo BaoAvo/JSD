@@ -80,12 +80,7 @@ public class LibraryManProg {
         libraryManager.returnBook(checkoutBooks.get(0), currentDate);
 
         //  Sort transactions by patron ID
-        System.out.println("---------------------------------");
-        System.out.println("After sort: ");
         libraryManager.sort();
-        libraryManager.transactions.forEach(i -> {
-            i.getDescription();
-        });
 
         // End the program
         System.exit(0);

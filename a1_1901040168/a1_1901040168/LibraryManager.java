@@ -16,9 +16,8 @@ public class LibraryManager {
     }
 
     //    This method adds a book to the library
-    public List<Book> addBook(Book book) {
+    public void addBook(Book book) {
         this.books.add(book);
-        return this.books;
     }
 
     //    This method retrieves a list of checked-out books for a specific patron
@@ -32,10 +31,6 @@ public class LibraryManager {
         return checkedOutBooks;
     }
 
-    //    This method allows a patron to check out a book. It first checks
-    //    if the patron has exceeded their checkout limit based on their patron type. If
-    //    not, it creates a new LibraryTransaction, adds it to the list of transactions,
-    //    and updates the number of available copies for the book.
     public void checkoutBook(Patron patron, Book book, Date checkoutDate, Date dueDate) {
         int checkoutLimit = 0; // Assume you have a method to get the patron's checkout limit
         if (patron.getPatronType().equals(PatronType.REGULAR)) {
@@ -60,10 +55,6 @@ public class LibraryManager {
         }
     }
 
-    //    This method allows a patron to return a book, calculates fines (if any), and
-    //    updates the number of available copies. It sets the return date in the
-    //    transaction, calculates fines, updates the number of available copies for the
-    //    book, and prints a success message
     public void returnBook(LibraryTransaction transaction, Date returnDate) {
         transaction.setReturnDate(returnDate);
         transaction.setFineAmount(transaction.calculateFine(returnDate,transaction.getDueDate()));
@@ -72,10 +63,6 @@ public class LibraryManager {
         System.out.println(String.format("You have successfully returned the %s book!",transaction.getBookLib().getTitle()));
     }
 
-    //    This method return a list of library transactions representing overdue books that are not returned yet.
-    //    Note: To get the current date to use for calculating the number of overdue days,
-    //    you need to use the getCurrentDate() method in the provided
-    //    common.DateUtils class (you should not modify this class)
     public List<LibraryTransaction> getOverdueBooks() {
         List<LibraryTransaction> overdueBooks = new ArrayList<>();
         DateUtils dateUtils = new DateUtils();
@@ -89,7 +76,6 @@ public class LibraryManager {
         return overdueBooks;
     }
 
-    // This method sorts the list of transactions by patron ID
     public void sort() {
         for (int i = 0; i < transactions.size() - 1; i++) {
             for (int j = i + 1; j < transactions.size(); j++) {

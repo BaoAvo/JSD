@@ -81,12 +81,6 @@ public class Patron {
                 ']';
     }
 
-    //    Generate a unique ID for each Patron (e.g. P001, P002…)
-    //    The Patron ID is generated automatically by the system using the formula: the letter P
-    //    followed by a unique number, auto-incremented from 1. The number should be padded with
-    //    zeros so that it contains at least 3 digits. For instance, the first patron will have the Patron ID
-    //    of P001, the second patron will have P002, and so on. The 100th patron will have the ID of
-    //    P100, zero padding is no longer required because the number already has 3 digits
     public String generatePatronID(){
         this.index++;
         return String.format("P%03d", this.index);

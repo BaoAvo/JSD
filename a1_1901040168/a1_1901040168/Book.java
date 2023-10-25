@@ -79,11 +79,6 @@ public class Book {
                 ']';
     }
 
-    //    Generate a unique ISBN for each book.
-    //    ISBN is a unique book identifier generated automatically by the system. It combines
-    //    elements like the author's initials, a numerical code for the genre, and the publication year. For
-    //    example, a book by John Doe in the year 2023 with the genre code for programming (e.g., 02)
-    //    would have an ISBN like JD-02-2023.
     public String generateISBN(){
         String genreCode = ""; 
         int genreIndex = this.getGenre().ordinal() + 1;
