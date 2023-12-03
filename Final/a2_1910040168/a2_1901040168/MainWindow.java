@@ -1,20 +1,19 @@
-package a2_1901040168;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
 
-public class MenuCommon extends WindowAdapter implements ActionListener {
+public class MainWindow extends JFrame implements ActionListener {
     private JMenu fileMenu, patronMenu, bookMenu, transactionMenu;
     private JMenuItem exitMenuItem, newPatronMenuItem, listPatronsMenuItem, newBookMenuItem, listBooksMenuItem,
             checkoutBookMenuItem, transactionReportMenuItem, returnBookMenuItem;
 
-    public MenuCommon(){
+    private JPanel currentScreen;
+    public MainWindow(){
         createMenuBar();
     }
-    public JMenuBar createMenuBar(){
+    public void createMenuBar(){
+        setTitle("Library Management");
         //Create a menu bar
         JMenuBar menuBar = new JMenuBar();
 
@@ -66,7 +65,12 @@ public class MenuCommon extends WindowAdapter implements ActionListener {
         menuBar.add(bookMenu);
         menuBar.add(transactionMenu);
 
-        return menuBar;
+        setJMenuBar(menuBar);
+
+        setSize(600, 350);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -74,16 +78,40 @@ public class MenuCommon extends WindowAdapter implements ActionListener {
         switch (cmd){
             case "Exit":
                 shutDown();
+                dispose();
                 break;
             case "New Patron":
+                setCurrentPanel(new NewPatron());
+                break;
             case "List Patrons":
+                setCurrentPanel(new ListPatrons());
+                break;
             case "New Book":
+                setCurrentPanel(new NewBook());
+                break;
             case "List Books":
+                setCurrentPanel(new ListBooks());
+                break;
             case "Checkout Book":
+                setCurrentPanel(new CheckoutBook());
+                break;
             case "Transaction Report":
+                setCurrentPanel(new TransactionReport());
+                break;
             case "Return Book":
-            default:
+                setCurrentPanel(new ReturnBook());
+                break;
         }
+    }
+
+    private void setCurrentPanel(JPanel newScreen) {
+        if (currentScreen != null) {
+            getContentPane().remove(currentScreen);
+        }
+        currentScreen = newScreen;
+        getContentPane().add(currentScreen, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 
     private void shutDown() {

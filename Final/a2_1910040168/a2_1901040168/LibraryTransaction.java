@@ -1,11 +1,6 @@
-package a2_1901040168;
-
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.Locale;
 
 public class LibraryTransaction {
     private Patron patronLib;
@@ -91,19 +86,5 @@ public class LibraryTransaction {
         } else {
             return daysOverdue * 3.0;
         }
-    }
-
-    public void getDescription(){
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("E, MMM dd yyyy");
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
-        String returnDateString = (this.getReturnDate() != null) ? dateFormatter.format(this.getReturnDate()) : "N/A";
-        String fineAmountString = this.getFineAmount() > 0 ? currencyFormatter.format(this.getFineAmount()) : "No Fine";
-        System.out.println("Transaction Details:\n"
-                        + "\tPatron ID: " + this.getPatronLib().getPatronId() + "\n"
-                        + "\tBook ISBN: " + this.getBookLib().getIsbn() + "\n"
-                        + "\tCheckout Date: " + dateFormatter.format(this.getCheckoutDate()) + "\n"
-                        + "\tDue Date: " + dateFormatter.format(this.getDueDate()) + "\n"
-                        + "\tReturn Date: " + returnDateString + "\n"
-                        + "\tFine Amount: " + fineAmountString);
     }
 }
